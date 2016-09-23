@@ -1,0 +1,23 @@
+body {
+  background-color: #1d1d1d;
+  color: #eee;
+}
+
+input[type="text"], textarea {
+
+  background-color : red!important;
+
+}
+
+.form-control {
+  background-color: #eee;
+  color: #1d1d1d;
+}
+
+h1 {
+  color: #eee;
+}
+
+#chat-history {
+  color: #1d1d1d;
+}

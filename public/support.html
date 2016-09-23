@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://simplewebrtc.com/latest-v2.js"></script> 
+	</head>
+	<body>
+		<video height="300" id="localVideo"></video>
+		<div id="remotesVideos"></div>
+
+		<script>
+			var webrtc = new SimpleWebRTC({
+				localVideoEl: 'localVideo',
+				remoteVideosEl: 'remotesVideos',
+				autoRequestMedia: true
+			});
+
+			webrtc.on('readyToCall', function () {
+				webrtc.joinRoom('appspeedsupport');
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+<% include header.html %>
+<div class="container">
+	<h1>Profile</h1>
+	<div class="btn-group">
+		<a class="btn btn-primary" href='/'>Home</a>
+		<a class="btn btn-primary" href='/profile'>Profile</a>
+		<a class="btn btn-primary" href="/list">List</a>
+		<a class="btn btn-primary" href='/new'>New Topic</a>
+		<a class="btn btn-primary" href='/chat'>Chat</a>
+		<a class="btn btn-primary" href='/logout'>Log Out</a>
+	</div>
+	<h3>Hello <%= user.name %> </h3>
+	<ol>
+		<% for (var i = 0; i < coffee.length; i++) { %>
+		<li><%= coffee[i] %></li>
+		<% } %>
+	</ol>
+</div>
+
+<% include footer.html %>

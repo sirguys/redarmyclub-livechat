@@ -1,0 +1,218 @@
+<% include header.html %>
+
+<style>
+	#chat-history {
+		min-height: 100px;
+		max-height: 100px;
+		background: #eee;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		border-radius: 4px;
+		padding: 1%;
+		overflow: auto;
+	}
+	input {
+		/*margin-top: 10px;*/
+		/*margin-bottom: 10px;*/
+	}
+video[style] {
+	position: static!important;
+}
+	._37u6 ._ox1 {
+		 left: 0;
+		 position: static;
+		 top: 0;
+		 transform: initial;
+	}
+
+ ._ox1 {
+ 	position: static!important;
+ }
+ video {
+ 	background: red!important;
+ }
+
+
+
+
+</style>
+
+<div class="container">
+
+	<!-- Load Facebook SDK for JavaScript -->
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your embedded video player code -->
+  <div class="fb-video" data-href="https://www.facebook.com/1272757669401018/videos/1282142038462581/" data-width="" data-height="" data-show-text="false">
+    <div class="fb-xfbml-parse-ignore">
+
+    </div>
+  </div>
+
+	<!-- <div class="embed-responsive embed-responsive-16by9" style="">
+	<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDONUNG69%2Fvideos%2F303525053354743%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+	</div> -->
+
+<!-- <% include chatbox.html %> -->
+
+
+	<div id="chat-history">
+
+	</div>
+
+
+	<p>
+
+	  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+	    ลิ้งดูบอล นอร์ธแฮมป์ตัน – แมนเชสเตอร์ ยูไนเต็ด
+	  </button>
+	</p>
+	<div class="collapse" id="collapseExample" >
+	  <div class="card card-block">
+			<ul class="list-group">
+			  <a target="_blank" href="http://yingtemteen.cloudapp.net/channel_2"><li class="list-group-item">yingtemteen.cloudapp.net</li></a>
+			  <a target="_blank" href=""><li class="list-group-item">Cras justo odio</li></a>
+				<a target="_blank" href=""><li class="list-group-item">Cras justo odio</li></a>
+				<a target="_blank" href=""><li class="list-group-item">Cras justo odio</li></a>
+				<a target="_blank" href=""><li class="list-group-item">Cras justo odio</li></a>
+			</ul>
+	  </div>
+	</div>
+
+	<div style="margin-bottom:200px;"></div>
+
+</div>
+
+		<form style="position:fixed;z-index:9999;bottom:0;width:100%;" action="javascript:send()">
+			<div class="container-fluid">
+				<input id="message"
+					class="form-control"
+					autofocus autocomplete="off"
+					placeholder="Message">
+			</div>
+
+			<div class="col-md-6" style="padding-right:0;">
+				<button style="width:100%;" type="submit" class="btn btn-success">
+					Send Message
+				</button>
+			</div>
+			<!-- <a href="javascript:shareLocation()"
+				class='btn btn-success'>Share Location</a> -->
+			<div class="col-md-6" style="padding-left:0;">
+				<a style="width:100%;" href="javascript:clear()"
+					class="btn btn-danger">Clear Chat Box</a>
+			</div>
+		</form>
+
+<script src="/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js">
+
+</script>
+<script src="/main.js"></script>
+<script>
+var socket = io.connect("/");
+var temp = document.cookie + ';';
+var position = temp.indexOf('session=');
+var semicolon = temp.indexOf(';', position);
+var session = temp.substring(position + 8, semicolon);
+
+socket.send({action:'join', session: session});
+
+socket.on("message", showMessage);
+
+var engine = null;
+if (webkitSpeechRecognition) {
+	engine = new webkitSpeechRecognition();
+	engine.lang = 'th';
+	engine.onresult = speechResult;
+	$('#message').keydown( e => {
+		if (e.which == 16) engine.start();
+	});
+	$('#message').keyup( e => {
+		if (e.which == 16) engine.stop();
+	});
+}
+
+function speechResult(e) {
+	var o = {
+		action: 'text',
+		session: session,
+		data: e.results[0][0].transcript
+	}
+	socket.send(o);
+}
+
+function showMessage(o) {
+	var message = "";
+	if (o.status == 'connect') {
+		message += "<span style='color:darkgreen;'><b>" + o.user + ":" + "</b> ";
+		message += o.data + "</span><br>";
+	}else if (o.status == 'disconnect') {
+		message += "<span style='color:darkred;'><b>" + o.user + ":" + "</b> ";
+		message += o.data + "</span><br>";
+	}else if (o.user == 'SirGuys') {
+		message += "<span style='color:red;'><b>Admin</b> </span><b>" + o.user + ": " + "</b>";
+		message += o.data + "<br>";
+	}else{
+		message += "<b>" + o.user + ":" + "</b> ";
+		message += o.data + "<br>";
+	}
+
+	$('#chat-history').append(message);
+	$('#chat-history').scrollTop($("#chat-history")[0].scrollHeight);
+}
+
+function send() {
+	var o = {};
+	o.action = 'text';
+	o.data = $('#message').val();
+	o.session = session;
+	socket.send(o);
+	$('#message').val("");
+}
+
+function shareLocation() {
+	navigator.geolocation.getCurrentPosition(
+		locationSuccess, locationFailed, {enableHighAccuracy:true})
+}
+
+function locationSuccess(position) {
+	var lat = position.coords.latitude;
+	var lon = position.coords.longitude;
+	var link = "http://wikimapia.org/#lat=" + lat +
+		"&lon=" + lon + "&z=15&m=w";
+	var message = "<a target='_blank' href='" + link +
+		"'>Location</a>";
+	var o = {
+		action: 'text',
+		data: message,
+		session: session
+	};
+	socket.send(o);
+}
+
+function locationFailed(error) {
+	console.log(error);
+}
+
+function clear() {
+	$('#chat-history').html("");
+}
+
+// $('video').html("<style type='text/css'>  position:static!important;  </style>");
+// $('._ox1').css('position','static');
+// $('._ox1').attr('style', 'position: static');
+</script>
+
+
+
+<% include footer.html %>
