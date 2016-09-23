@@ -1,6 +1,6 @@
 body {
-  background-color: #1d1d1d;
-  color: #eee;
+  background-color: #1d1d1d!important;
+  color: #eee!important;
 }
 
 input[type="text"], textarea {
@@ -10,14 +10,14 @@ input[type="text"], textarea {
 }
 
 .form-control {
-  background-color: #eee;
-  color: #1d1d1d;
+  background-color: #eee!important;
+  color: #1d1d1d!important;
 }
 
 h1 {
-  color: #eee;
+  color: #eee!important;
 }
 
 #chat-history {
-  color: #1d1d1d;
+  color: #1d1d1d!important;
 }
