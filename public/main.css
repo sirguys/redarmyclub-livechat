@@ -32,3 +32,15 @@ h1 {
   border: #eee 1px solid;
   color: #eee;
 }
+
+.btn {
+  background-color: #eee;
+  border: #eee 1px solid;
+  color: #1d1d1d;
+}
+
+.btn:hover {
+  background-color: #1d1d1d;
+  border: #eee 1px solid;
+  color: #eee;
+}
