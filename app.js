@@ -12,7 +12,7 @@ var upload  = multer({dest: 'uploads' });
 var granted = [ ];
 
 // app.listen(2000);
-io.listen(app.listen(2000));
+io.listen(app.listen(80));
 
 io.on("connection", client => {
 	client.on("message", o => {
